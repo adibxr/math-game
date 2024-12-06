@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escape the Mathematician's Room</title>
+    <style>
+        
+        canvas {
+            background-color: rgba(219, 191, 191, 0.8);
+            display: block;
+            margin: 20px auto;
+        }
+        body {
+            font-family:Arial, sans-serif, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-image: url('download.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        #welcomeScreen, #feedbackScreen {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+        }
+        .btn, #feedbackButton {
+            padding: 10px 20px;
+           
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #feedbackButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+        }
+        .option-btn {
+            background-color: #007bff;
+            color: white;
+            width: 10%;
+            margin: 5px auto;
+            border-bottom: #28a745;
+    
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcomeScreen">
+        <h1>Welcome to the Mathematician's Room!</h1>
+        <p>Can you escape by answering all the questions?</p>
+        <button class="btn" id="startButton">Start Game</button>
+    </div>
+
+    <div id="feedbackScreen">
+        <h2>Feedback</h2>
+        <textarea id="feedbackText" rows="4" placeholder="Enter your feedback here"></textarea><br>
+        <button class="btn" onclick="submitFeedback()">Submit Feedback</button>
+        <button class="btn" onclick="closeFeedback()">Close</button>
+    </div>
+
+    <h1>Escape the Mathematician's Room</h1>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <p id="gameStatus"></p>
+    <button id="feedbackButton" onclick="openFeedback()">Feedback</button>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const startButton = document.getElementById('startButton');
+        const feedbackScreen = document.getElementById('feedbackScreen');
+        const feedbackButton = document.getElementById('feedbackButton');;
+
+        // Questions organized by chapters of Class 10 NCERT Mathematics
+        const questions =  {
+            1: [
+        //Real Numbers
+        { question: "1 .What is the decimal representation of 1/8?", options: ["0.75", "0.125", "0.5", "0.25"], answer: "0.125" },
+        { question: "2 .Find the HCF of 24 and 36.", options: ["6", "18", "24", "12"], answer: "12" },
+        { question: "3 .Write 0.75 as a fraction in simplest form.", options: ["3/4", "1/2", "2/3", "4/5"], answer: "3/4" },
+        { question: "4 .Is √2 a rational number?", options: ["Yes", "No"], answer: "No" },
+        { question: "5 .What is the LCM of 12 and 15?", options: ["30", "60", "45", "15"], answer: "60" },
+        { question: "6 .Which of the following is irrational?", options: ["√3", "4", "0.25", "2"], answer: "√3" },
+        { question: "7 .The HCF of 18 and 42 is?", options: ["3", "12", "6", "9"], answer: "6" },
+        { question: "8 .What is the LCM of 5 and 7?", options: ["35", "12", "60", "25"], answer: "35" },
+        { question: "9. Simplify √16.", options: ["2", "16", "8", "4"], answer: "4" },
+        { question: "10.What is the square of √2?", options: ["2", "1", "√4", "√2"], answer: "2" }
+    ],
+    2: [
+        // Polynomials
+        { question: "1 .What is the degree of the polynomial 3x^2 + 2x + 1?", options: ["1", "2", "3", "0"], answer: "2" },
+        { question: "2 .Factorize x^2 - 9.", options: ["(x - 3)(x + 3)", "(x - 3)(x - 3)", "(x + 3)(x + 3)", "(x - 9)"], answer: "(x - 3)(x + 3)" },
+        { question: "3 . What is the value of p(2) if p(x) = x^2 + 3x + 2?", options: ["12", "8", "10", "6"], answer: "12" },
+        { question: "4 .What is the sum of the roots of x^2 - 5x + 6?", options: ["5", "6", "4", "3"], answer: "5" },
+        { question: "5 .Multiply (x + 2)(x - 3).", options: ["x^2 - x - 6", "x^2 + x - 6", "x^2 - 5x + 6", "x^2 - 1"], answer: "x^2 - x - 6" },
+        { question: "6 .The roots of the equation x^2 + 5x + 6 = 0 are?", options: ["-1, -6", "1, 6", "-2, -3", "2, 3"], answer: "-2, -3" },
+        { question: "7 .If x^2 - 4 = 0, then x is?", options: ["±2", "±4", "±3", "1"], answer: "±2" },
+        { question: "8 .What is the factorization of x^2 + 3x - 10?", options: ["(x + 5)(x - 2)", "(x + 2)(x - 5)", "(x - 5)(x + 2)", "(x + 10)(x - 1)"], answer: "(x + 5)(x - 2)" },
+        { question: "9 .What is the value of x if 2x^2 - 5x + 2 = 0?", options: ["1/2", "2", "-1/2", "1"], answer: "1/2" },
+        { question: "10 .What is the factorization of x^2 + 4x + 4?", options: ["(x + 2)(x + 2)", "(x - 2)(x - 2)", "(x + 1)(x + 1)", "(x - 1)(x - 1)"], answer: "(x + 2)(x + 2)" }
+    ],
+    3: [
+        // Pair of Linear Equations in Two Variables
+        { question: "1. The equation of a line passing through (1, 2) and (3, 6) is?", options: ["y = 2x", "y = 3x", "y = 4x", "y = x"], answer: "y = 2x" },
+        { question: "2 .What is the value of x in 2x + 3y = 7 and x + 2y = 4?", options: ["1", "2", "0", "3"], answer: "1" },
+        { question: "3 .If 2x + 3y = 6 and 3x + 4y = 7, what is the value of x?", options: ["1", "2", "3", "4"], answer: "1" },
+        { question: "4 .the solution to the system of equations x + y = 5 and x - y = 1 is?", options: ["(2, 3)", "(3, 2)", "(1, 4)", "(4, 1)"], answer: "(3, 2)" },
+        { question: "5 .What is the slope of the line 3x - 4y = 12?", options: ["3/4", "-3/4", "4/3", "-4/3"], answer: "3/4" },
+        { question: "6 .What is the solution to the system of equations x + y = 8 and 2x + 2y = 16?", options: ["(4, 4)", "(5, 3)", "(6, 2)", "(7, 1)"], answer: "(4, 4)" },
+        { question: "7 .The equation of a line is 5x + 3y = 15. What is the y-intercept?", options: ["5", "3", "15", "0"], answer: "5" },
+        { question: "8 .What is the solution to the pair of equations 2x - y = 3 and 3x + 4y = 12?", options: ["(2, 1)", "(1, 3)", "(3, 2)", "(4, 1)"], answer: "(2, 1)" },
+        { question: "9 .If x + y = 7 and x - y = 3, then x is?", options: ["5", "4", "3", "2"], answer: "5" },
+        { question: "10 .If 4x + 5y = 9 and 3x - 2y = 4, the value of y is?", options: ["1", "2", "3", "4"], answer: "1" }
+    ],
+    4: [
+        // Quadratic Equations
+        { question: "1 .What is the value of x in the equation x^2 - 4x = 0?", options: ["0", "2", "-2", "4"], answer: "0" },
+        { question: "2 .Find the roots of the equation x^2 - 5x + 6 = 0.", options: ["1, 6", "-1, -6", "2, 3", "3, 2"], answer: "2, 3" },
+        { question: "3 .What is the discriminant of the quadratic equation x^2 + 6x + 9 = 0?", options: ["9", "36", "16", "0"], answer: "0" },
+        { question: "4 .Solve x^2 + 2x - 3 = 0.", options: ["1, -3", "-1, 3", "2, -2", "3, 2"], answer: "1, -3" },
+        { question: "5 .The roots of x^2 - 7x + 12 = 0 are?", options: ["4, 3", "3, 4", "2, 5", "5, 2"], answer: "3, 4" },
+        { question: "6 .Find the value of x in the equation x^2 - 9 = 0.", options: ["3", "-3", "0", "9"], answer: "3, -3" },
+        { question: "7 .The sum of the roots of the quadratic equation x^2 - 4x + 3 = 0 is?", options: ["3", "1", "4", "2"], answer: "4" },
+        { question: "8 .The product of the roots of the equation x^2 - 5x + 6 = 0 is?", options: ["4", "5", "6", "2"], answer: "6" },
+        { question: "9 .If the roots of the quadratic equation x^2 - 2x + 1 = 0 are equal, then the value of the discriminant is?", options: ["1", "0", "2", "-1"], answer: "0" },
+        { question: "10 .What is the value of the discriminant in the equation 2x^2 - 4x + 2 = 0?", options: ["0", "4", "8", "12"], answer: "0" }
+    ],
+    5: [
+        // Arithmetic Progressions
+        { question: "1 .What is the nth term of the arithmetic progression 2, 5, 8, 11, ...?", options: ["2n + 1", "3n + 2", "3n + 5", "3n"], answer: "3n - 1" },
+        { question: "2 .The sum of the first 10 terms of an arithmetic progression with the first term 3 and common difference 5 is?", options: ["150", "145", "140", "135"], answer: "150" },
+        { question: "3 .What is the 20th term of the arithmetic progression 7, 10, 13, 16, ...?", options: ["60", "66", "64", "62"], answer: "60" },
+        { question: "4 .In an arithmetic progression, if the first term is 4 and the common difference is 3, the 6th term is?", options: ["18", "19", "16", "20"], answer: "18" },
+        { question: "5 .What is the sum of the first 5 terms of the arithmetic progression 1, 4, 7, 10, ...?", options: ["30", "20", "25", "35"], answer: "25" },
+        { question: "6 .What is the common difference of the arithmetic progression 10, 7, 4, 1, ...?", options: ["-3", "3", "-2", "2"], answer: "-3" },
+        { question: "7 .The 15th term of the arithmetic progression 5, 8, 11, ... is?", options: ["47", "49", "50", "46"], answer: "47" },
+        { question: "8 .The sum of the first 12 terms of an arithmetic progression with first term 6 and common difference 2 is?", options: ["96", "92", "108", "120"], answer: "96" },
+        { question: "9 .If the sum of the first n terms of an arithmetic progression is 5n + 2, the nth term is?", options: ["5", "5n", "2n", "n + 2"], answer: "5n + 2" },
+        { question: "10 .In an arithmetic progression, the 7th term is 22 and the common difference is 3. What is the first term?", options: ["7", "6", "5", "4"], answer: "7" }
+    ],
+    6: [
+             // Coordinate Geometry
+        { question: "1 .What is the distance between the points (3, 4) and (6, 8)?", options: ["5", "4", "6", "7"], answer: "5" },
+        { question: "2 .What is the midpoint of the points (2, 4) and (4, 6)?", options: ["(3, 5)", "(5, 3)", "(2, 2)", "(4, 5)"], answer: "(3, 5)" },
+        { question: "3 .What is the slope of the line passing through points (1, 2) and (3, 6)?", options: ["2", "3", "4", "1"], answer: "2" },
+        { question: "4 .What is the equation of a line passing through (0, 0) and (2, 4)?", options: ["y = 2x", "y = 4x", "y = x", "y = 3x"], answer: "y = 2x" },
+        { question: "5 .What is the distance between the points (2, 3) and (5, 7)?", options: ["5", "4", "6", "7"], answer: "5" }
+        { question: "6 . The points (-1, -2), (1, 0), (-1, 2), (-3, 0) form a quadrilateral of type:", options: ["rectangle", "square", "rhombus", "parallelogram"], answer: "square" }
+        { question: "7 . If the distance between the points A(2, -2) and B(-1, x) is equal to 5, then the value of x is", options: ["2", "-2", "1", "-1"], answer: "5" }
+        { question: "8 . The midpoint of a line segment joining two points A(2, 4) and B(-2, -4) is", options: ["(-2, 4)", "(2, -4)", " (0, 0)", " (-2, -4)"], answer: "(0, 0)" }
+        { question: "9 .  The distance of point A(2, 4) from the x-axis is", options: ["2 unit", "4 unit", " -2 unit", "-4 unit"], answer: "4 unit" }
+        { question: "9 .  The distance of point A(2, 4) from the x-axis is", options: ["2 unit", "4 unit", " -2 unit", "-4 unit"], answer: "4 unit" }
+    ],7:[
+        
+        // Trigonometry
+        { question: "What is the value of sin(30°)?", options: ["1/2", "√3/2", "1", "√2/2"], answer: "1/2" },
+        { question: "What is the value of tan(45°)?", options: ["0", "1", "√2", "∞"], answer: "1" },
+        { question: "What is the value of cos(0°)?", options: ["0", "1", "√2/2", "∞"], answer: "1" },
+        { question: "If tan(θ) = 1, then what is the value of θ?", options: ["30°", "45°", "60°", "90°"], answer: "45°" },
+        { question: "What is the value of cos(60°)?", options: ["0", "1", "1/2", "√3/2"], answer: "1/2" },
+        { question: "In ∆ ABC, right-angled at B, AB = 24 cm, BC = 7 cm. The value of tan C is:)?", options: [" 12/7", "24/7", "20/7", " 7/24"], answer: "24/7" },
+        { question: "3. The value of tan 60°/cot 30° is equal to:?", options: [" 0", "1", "2", " 3"], answer: "1" },
+
+        ],8 :[      // Statistics
+        { question: "What is the mean of the numbers 4, 7, 9, and 5?", options: ["6", "5", "7", "8"], answer: "6" },
+        { question: "The mode of the data set {3, 4, 5, 4, 6, 4, 7} is?", options: ["4", "5", "6", "7"], answer: "4" },
+        { question: "The median of the data set {3, 7, 5, 8, 9, 4} is?", options: ["5", "6", "7", "8"], answer: "6" },
+        { question: "Find the range of the data set {12, 15, 18, 11, 16}.", options: ["5", "6", "7", "8"], answer: "7" },
+        { question: "The mean of the numbers 2, 4, 6, and 8 is?", options: ["5", "6", "4", "3"], answer: "5" },
+
+        ],9 :[      // Circles
+        { question: "What is the area of a circle with radius 7 cm?", options: ["154 cm²", "49 cm²", "22 cm²", "14 cm²"], answer: "154 cm²" },
+        { question: "If the radius of a circle is 10 cm, what is the circumference?", options: ["31.42 cm", "62.84 cm", "100 cm", "50 cm"], answer: "62.84 cm" },
+        { question: "What is the diameter of a circle with radius 8 cm?", options: ["8 cm", "16 cm", "4 cm", "2 cm"], answer: "16 cm" },
+        { question: "If the circumference of a circle is 31.42 cm, what is its radius?", options: ["5 cm", "8 cm", "7 cm", "10 cm"], answer: "5 cm" },
+        { question: "What is the area of a circle with radius 3 cm?", options: ["28.27 cm²", "15.70 cm²", "9.42 cm²", "25.12 cm²"], answer: "28.27 cm²" },
+
+                ] // Shuffle questions for the first level
+}
+
+let lives = 5;
+        let maxLives = 5;
+        let livesRecovery = 2;
+        let level = 1;
+        let questionIndex = 0;
+        let randomQuestions = [];
+
+        function drawText(text, x, y, color = "black", size = 24) {
+            ctx.fillStyle = color;
+            ctx.font = `${size}px Arial`;
+            ctx.fillText(text, x, y);
+        }
+
+        function renderGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawText(`Lives: ${lives}`, 10, 40, "red");
+            drawText(`Level: ${level}`, canvas.width - 120, 40, "blue");
+
+            // Clear any previous options from the DOM
+            document.querySelectorAll('.option-btn').forEach(btn => btn.remove());
+
+            if (lives <= 0) {
+                document.getElementById("gameStatus").textContent = "Game Over! You've run out of lives.";
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                drawText("GAME OVER", canvas.width / 2 - 100, canvas.height / 2, "red", 48);
+                drawText("Better luck next time!", canvas.width / 2 - 150, canvas.height / 2 + 60, "white");
+                return;
+            }
+
+            if (questionIndex < randomQuestions.length) {
+                const { question, options } = randomQuestions[questionIndex];
+                drawText(question, 50, 100, "black", 24);
+
+                options.forEach((option, i) => {
+                    const optionBtn = document.createElement("button");
+                    optionBtn.classList.add("option-btn", "btn");
+                    optionBtn.textContent = option;
+                    optionBtn.onclick = () => selectOption(i);
+                    document.body.appendChild(optionBtn);
+                });
+            }
+        }
+
+        function selectOption(selectedOptionIndex) {
+            const { options, answer } = randomQuestions[questionIndex];
+            if (options[selectedOptionIndex] === answer) {
+                questionIndex++;
+                if (questionIndex >= randomQuestions.length) {
+                    level++;
+                    recoverLives(); // Recover lives at level completion
+                    if (level > Object.keys(questions).length) {
+                        document.getElementById("gameStatus").textContent = "You've escaped the mathematician's room!";
+                    } else {
+                        randomQuestions = questions[level].sort(() => Math.random() - 0.5);
+                        questionIndex = 0;
+                    }
+                }
+            } else {
+                lives--;
+            }
+            renderGame();
+        }
+
+        // Function to recover lives when level is completed
+        function recoverLives() {
+            lives = Math.min(lives + livesRecovery, maxLives);
+        }
+
+        // Show the welcome screen when the page loads
+        window.onload = function() {
+            welcomeScreen.style.display = 'block';
+        };
+
+        // Add event listener to the start button
+        startButton.addEventListener('click', function() {
+            welcomeScreen.style.display = 'none'; // Hide the welcome screen
+            resetGame(); // Reset game state
+            renderGame(); // Start rendering the game
+        });
+
+        // Function to reset game state
+        function resetGame() {
+            lives = 5;
+            level = 1;
+            questionIndex = 0;
+            randomQuestions = questions[level].sort(() => Math.random() - 0.5);
+        }
+
+        // Feedback functions
+        function openFeedback() {
+            feedbackScreen.style.display = 'block';
+        }
+
+        function closeFeedback() {
+            feedbackScreen.style.display = 'none';
+        }
+
+        function submitFeedback() {
+            const feedback = document.getElementById('feedbackText').value;
+            if (feedback) {
+                console.log("Feedback received:", feedback); // Display feedback in the console for now
+                alert("Thank you for your feedback!");
+                closeFeedback();
+                document.getElementById('feedbackText').value = ''; // Clear the textarea
+            }
+        }
+    </script>
+</body>
+</html>
