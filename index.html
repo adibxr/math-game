@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escape the Mathematician's Room</title>
     <style>
-        
         canvas {
             background-color: rgba(219, 191, 191, 0.8);
             display: block;
             margin: 20px auto;
         }
         body {
-            font-family:Arial, sans-serif, sans-serif;
+            font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
@@ -35,7 +34,6 @@
         }
         .btn, #feedbackButton {
             padding: 10px 20px;
-           
             margin: 10px;
             font-size: 16px;
             border: none;
@@ -52,7 +50,7 @@
         .option-btn {
             background-color: #007bff;
             color: white;
-            width: 10%;
+            width: 80%;
             margin: 5px auto;
             border-bottom: #28a745;
     
@@ -90,83 +88,78 @@
         // Questions organized by chapters of Class 10 NCERT Mathematics
         const questions =  {
             1: [
-        //Real Numbers
-        { question: "1 .What is the decimal representation of 1/8?", options: ["0.75", "0.125", "0.5", "0.25"], answer: "0.125" },
-        { question: "2 .Find the HCF of 24 and 36.", options: ["6", "18", "24", "12"], answer: "12" },
-        { question: "3 .Write 0.75 as a fraction in simplest form.", options: ["3/4", "1/2", "2/3", "4/5"], answer: "3/4" },
-        { question: "4 .Is √2 a rational number?", options: ["Yes", "No"], answer: "No" },
-        { question: "5 .What is the LCM of 12 and 15?", options: ["30", "60", "45", "15"], answer: "60" },
-        { question: "6 .Which of the following is irrational?", options: ["√3", "4", "0.25", "2"], answer: "√3" },
-        { question: "7 .The HCF of 18 and 42 is?", options: ["3", "12", "6", "9"], answer: "6" },
-        { question: "8 .What is the LCM of 5 and 7?", options: ["35", "12", "60", "25"], answer: "35" },
-        { question: "9. Simplify √16.", options: ["2", "16", "8", "4"], answer: "4" },
-        { question: "10.What is the square of √2?", options: ["2", "1", "√4", "√2"], answer: "2" }
+        // Real Numbers
+        { question: "What is the decimal representation of 1/8?", options: ["0.125", "0.75", "0.5", "0.25"], answer: "0.125" },
+        { question: "Find the HCF of 24 and 36.", options: ["12", "18", "24", "6"], answer: "12" },
+        { question: "Write 0.75 as a fraction in simplest form.", options: ["3/4", "1/2", "2/3", "4/5"], answer: "3/4" },
+        { question: "Is √2 a rational number?", options: ["Yes", "No"], answer: "No" },
+        { question: "What is the LCM of 12 and 15?", options: ["30", "60", "45", "15"], answer: "60" },
+        { question: "Which of the following is irrational?", options: ["√3", "4", "0.25", "2"], answer: "√3" },
+        { question: "The HCF of 18 and 42 is?", options: ["6", "12", "3", "9"], answer: "6" },
+        { question: "What is the LCM of 5 and 7?", options: ["35", "12", "60", "25"], answer: "35" },
+        { question: "Simplify √16.", options: ["4", "16", "8", "2"], answer: "4" },
+        { question: "What is the square of √2?", options: ["2", "1", "√4", "√2"], answer: "2" }
     ],
     2: [
         // Polynomials
-        { question: "1 .What is the degree of the polynomial 3x^2 + 2x + 1?", options: ["1", "2", "3", "0"], answer: "2" },
-        { question: "2 .Factorize x^2 - 9.", options: ["(x - 3)(x + 3)", "(x - 3)(x - 3)", "(x + 3)(x + 3)", "(x - 9)"], answer: "(x - 3)(x + 3)" },
-        { question: "3 . What is the value of p(2) if p(x) = x^2 + 3x + 2?", options: ["12", "8", "10", "6"], answer: "12" },
-        { question: "4 .What is the sum of the roots of x^2 - 5x + 6?", options: ["5", "6", "4", "3"], answer: "5" },
-        { question: "5 .Multiply (x + 2)(x - 3).", options: ["x^2 - x - 6", "x^2 + x - 6", "x^2 - 5x + 6", "x^2 - 1"], answer: "x^2 - x - 6" },
-        { question: "6 .The roots of the equation x^2 + 5x + 6 = 0 are?", options: ["-1, -6", "1, 6", "-2, -3", "2, 3"], answer: "-2, -3" },
-        { question: "7 .If x^2 - 4 = 0, then x is?", options: ["±2", "±4", "±3", "1"], answer: "±2" },
-        { question: "8 .What is the factorization of x^2 + 3x - 10?", options: ["(x + 5)(x - 2)", "(x + 2)(x - 5)", "(x - 5)(x + 2)", "(x + 10)(x - 1)"], answer: "(x + 5)(x - 2)" },
-        { question: "9 .What is the value of x if 2x^2 - 5x + 2 = 0?", options: ["1/2", "2", "-1/2", "1"], answer: "1/2" },
-        { question: "10 .What is the factorization of x^2 + 4x + 4?", options: ["(x + 2)(x + 2)", "(x - 2)(x - 2)", "(x + 1)(x + 1)", "(x - 1)(x - 1)"], answer: "(x + 2)(x + 2)" }
+        { question: "What is the degree of the polynomial 3x^2 + 2x + 1?", options: ["1", "2", "3", "0"], answer: "2" },
+        { question: "Factorize x^2 - 9.", options: ["(x - 3)(x + 3)", "(x - 3)(x - 3)", "(x + 3)(x + 3)", "(x - 9)"], answer: "(x - 3)(x + 3)" },
+        { question: "What is the value of p(2) if p(x) = x^2 + 3x + 2?", options: ["12", "8", "10", "6"], answer: "12" },
+        { question: "What is the sum of the roots of x^2 - 5x + 6?", options: ["5", "6", "4", "3"], answer: "5" },
+        { question: "Multiply (x + 2)(x - 3).", options: ["x^2 - x - 6", "x^2 + x - 6", "x^2 - 5x + 6", "x^2 - 1"], answer: "x^2 - x - 6" },
+        { question: "The roots of the equation x^2 + 5x + 6 = 0 are?", options: ["-1, -6", "1, 6", "-2, -3", "2, 3"], answer: "-2, -3" },
+        { question: "If x^2 - 4 = 0, then x is?", options: ["±2", "±4", "±3", "1"], answer: "±2" },
+        { question: "What is the factorization of x^2 + 3x - 10?", options: ["(x + 5)(x - 2)", "(x + 2)(x - 5)", "(x - 5)(x + 2)", "(x + 10)(x - 1)"], answer: "(x + 5)(x - 2)" },
+        { question: "What is the value of x if 2x^2 - 5x + 2 = 0?", options: ["1/2", "2", "-1/2", "1"], answer: "1/2" },
+        { question: "What is the factorization of x^2 + 4x + 4?", options: ["(x + 2)(x + 2)", "(x - 2)(x - 2)", "(x + 1)(x + 1)", "(x - 1)(x - 1)"], answer: "(x + 2)(x + 2)" }
     ],
     3: [
         // Pair of Linear Equations in Two Variables
-        { question: "1. The equation of a line passing through (1, 2) and (3, 6) is?", options: ["y = 2x", "y = 3x", "y = 4x", "y = x"], answer: "y = 2x" },
-        { question: "2 .What is the value of x in 2x + 3y = 7 and x + 2y = 4?", options: ["1", "2", "0", "3"], answer: "1" },
-        { question: "3 .If 2x + 3y = 6 and 3x + 4y = 7, what is the value of x?", options: ["1", "2", "3", "4"], answer: "1" },
-        { question: "4 .the solution to the system of equations x + y = 5 and x - y = 1 is?", options: ["(2, 3)", "(3, 2)", "(1, 4)", "(4, 1)"], answer: "(3, 2)" },
-        { question: "5 .What is the slope of the line 3x - 4y = 12?", options: ["3/4", "-3/4", "4/3", "-4/3"], answer: "3/4" },
-        { question: "6 .What is the solution to the system of equations x + y = 8 and 2x + 2y = 16?", options: ["(4, 4)", "(5, 3)", "(6, 2)", "(7, 1)"], answer: "(4, 4)" },
-        { question: "7 .The equation of a line is 5x + 3y = 15. What is the y-intercept?", options: ["5", "3", "15", "0"], answer: "5" },
-        { question: "8 .What is the solution to the pair of equations 2x - y = 3 and 3x + 4y = 12?", options: ["(2, 1)", "(1, 3)", "(3, 2)", "(4, 1)"], answer: "(2, 1)" },
-        { question: "9 .If x + y = 7 and x - y = 3, then x is?", options: ["5", "4", "3", "2"], answer: "5" },
-        { question: "10 .If 4x + 5y = 9 and 3x - 2y = 4, the value of y is?", options: ["1", "2", "3", "4"], answer: "1" }
+        { question: "The equation of a line passing through (1, 2) and (3, 6) is?", options: ["y = 2x", "y = 3x", "y = 4x", "y = x"], answer: "y = 2x" },
+        { question: "What is the value of x in 2x + 3y = 7 and x + 2y = 4?", options: ["1", "2", "0", "3"], answer: "1" },
+        { question: "If 2x + 3y = 6 and 3x + 4y = 7, what is the value of x?", options: ["1", "2", "3", "4"], answer: "1" },
+        { question: "The solution to the system of equations x + y = 5 and x - y = 1 is?", options: ["(2, 3)", "(3, 2)", "(1, 4)", "(4, 1)"], answer: "(3, 2)" },
+        { question: "What is the slope of the line 3x - 4y = 12?", options: ["3/4", "-3/4", "4/3", "-4/3"], answer: "3/4" },
+        { question: "What is the solution to the system of equations x + y = 8 and 2x + 2y = 16?", options: ["(4, 4)", "(5, 3)", "(6, 2)", "(7, 1)"], answer: "(4, 4)" },
+        { question: "The equation of a line is 5x + 3y = 15. What is the y-intercept?", options: ["5", "3", "15", "0"], answer: "5" },
+        { question: "What is the solution to the pair of equations 2x - y = 3 and 3x + 4y = 12?", options: ["(2, 1)", "(1, 3)", "(3, 2)", "(4, 1)"], answer: "(2, 1)" },
+        { question: "If x + y = 7 and x - y = 3, then x is?", options: ["5", "4", "3", "2"], answer: "5" },
+        { question: "If 4x + 5y = 9 and 3x - 2y = 4, the value of y is?", options: ["1", "2", "3", "4"], answer: "1" }
     ],
     4: [
         // Quadratic Equations
-        { question: "1 .What is the value of x in the equation x^2 - 4x = 0?", options: ["0", "2", "-2", "4"], answer: "0" },
-        { question: "2 .Find the roots of the equation x^2 - 5x + 6 = 0.", options: ["1, 6", "-1, -6", "2, 3", "3, 2"], answer: "2, 3" },
-        { question: "3 .What is the discriminant of the quadratic equation x^2 + 6x + 9 = 0?", options: ["9", "36", "16", "0"], answer: "0" },
-        { question: "4 .Solve x^2 + 2x - 3 = 0.", options: ["1, -3", "-1, 3", "2, -2", "3, 2"], answer: "1, -3" },
-        { question: "5 .The roots of x^2 - 7x + 12 = 0 are?", options: ["4, 3", "3, 4", "2, 5", "5, 2"], answer: "3, 4" },
-        { question: "6 .Find the value of x in the equation x^2 - 9 = 0.", options: ["3", "-3", "0", "9"], answer: "3, -3" },
-        { question: "7 .The sum of the roots of the quadratic equation x^2 - 4x + 3 = 0 is?", options: ["3", "1", "4", "2"], answer: "4" },
-        { question: "8 .The product of the roots of the equation x^2 - 5x + 6 = 0 is?", options: ["4", "5", "6", "2"], answer: "6" },
-        { question: "9 .If the roots of the quadratic equation x^2 - 2x + 1 = 0 are equal, then the value of the discriminant is?", options: ["1", "0", "2", "-1"], answer: "0" },
-        { question: "10 .What is the value of the discriminant in the equation 2x^2 - 4x + 2 = 0?", options: ["0", "4", "8", "12"], answer: "0" }
+        { question: "What is the value of x in the equation x^2 - 4x = 0?", options: ["0", "2", "-2", "4"], answer: "0" },
+        { question: "Find the roots of the equation x^2 - 5x + 6 = 0.", options: ["1, 6", "-1, -6", "2, 3", "3, 2"], answer: "2, 3" },
+        { question: "What is the discriminant of the quadratic equation x^2 + 6x + 9 = 0?", options: ["9", "36", "16", "0"], answer: "0" },
+        { question: "Solve x^2 + 2x - 3 = 0.", options: ["1, -3", "-1, 3", "2, -2", "3, 2"], answer: "1, -3" },
+        { question: "The roots of x^2 - 7x + 12 = 0 are?", options: ["4, 3", "3, 4", "2, 5", "5, 2"], answer: "3, 4" },
+        { question: "Find the value of x in the equation x^2 - 9 = 0.", options: ["3", "-3", "0", "9"], answer: "3, -3" },
+        { question: "The sum of the roots of the quadratic equation x^2 - 4x + 3 = 0 is?", options: ["3", "1", "4", "2"], answer: "4" },
+        { question: "The product of the roots of the equation x^2 - 5x + 6 = 0 is?", options: ["6", "5", "4", "2"], answer: "6" },
+        { question: "If the roots of the quadratic equation x^2 - 2x + 1 = 0 are equal, then the value of the discriminant is?", options: ["1", "0", "2", "-1"], answer: "0" },
+        { question: "What is the value of the discriminant in the equation 2x^2 - 4x + 2 = 0?", options: ["0", "4", "8", "12"], answer: "0" }
     ],
     5: [
         // Arithmetic Progressions
-        { question: "1 .What is the nth term of the arithmetic progression 2, 5, 8, 11, ...?", options: ["2n + 1", "3n + 2", "3n + 5", "3n"], answer: "3n - 1" },
-        { question: "2 .The sum of the first 10 terms of an arithmetic progression with the first term 3 and common difference 5 is?", options: ["150", "145", "140", "135"], answer: "150" },
-        { question: "3 .What is the 20th term of the arithmetic progression 7, 10, 13, 16, ...?", options: ["60", "66", "64", "62"], answer: "60" },
-        { question: "4 .In an arithmetic progression, if the first term is 4 and the common difference is 3, the 6th term is?", options: ["18", "19", "16", "20"], answer: "18" },
-        { question: "5 .What is the sum of the first 5 terms of the arithmetic progression 1, 4, 7, 10, ...?", options: ["30", "20", "25", "35"], answer: "25" },
-        { question: "6 .What is the common difference of the arithmetic progression 10, 7, 4, 1, ...?", options: ["-3", "3", "-2", "2"], answer: "-3" },
-        { question: "7 .The 15th term of the arithmetic progression 5, 8, 11, ... is?", options: ["47", "49", "50", "46"], answer: "47" },
-        { question: "8 .The sum of the first 12 terms of an arithmetic progression with first term 6 and common difference 2 is?", options: ["96", "92", "108", "120"], answer: "96" },
-        { question: "9 .If the sum of the first n terms of an arithmetic progression is 5n + 2, the nth term is?", options: ["5", "5n", "2n", "n + 2"], answer: "5n + 2" },
-        { question: "10 .In an arithmetic progression, the 7th term is 22 and the common difference is 3. What is the first term?", options: ["7", "6", "5", "4"], answer: "7" }
+        { question: "What is the nth term of the arithmetic progression 2, 5, 8, 11, ...?", options: ["2n + 1", "3n + 2", "3n + 5", "3n"], answer: "3n - 1" },
+        { question: "The sum of the first 10 terms of an arithmetic progression with the first term 3 and common difference 5 is?", options: ["150", "145", "140", "135"], answer: "150" },
+        { question: "What is the 20th term of the arithmetic progression 7, 10, 13, 16, ...?", options: ["60", "66", "64", "62"], answer: "60" },
+        { question: "In an arithmetic progression, if the first term is 4 and the common difference is 3, the 6th term is?", options: ["18", "19", "16", "20"], answer: "18" },
+        { question: "What is the sum of the first 5 terms of the arithmetic progression 1, 4, 7, 10, ...?", options: ["30", "20", "25", "35"], answer: "25" },
+        { question: "What is the common difference of the arithmetic progression 10, 7, 4, 1, ...?", options: ["-3", "3", "-2", "2"], answer: "-3" },
+        { question: "The 15th term of the arithmetic progression 5, 8, 11, ... is?", options: ["47", "49", "50", "46"], answer: "47" },
+        { question: "The sum of the first 12 terms of an arithmetic progression with first term 6 and common difference 2 is?", options: ["96", "92", "108", "120"], answer: "96" },
+        { question: "If the sum of the first n terms of an arithmetic progression is 5n + 2, the nth term is?", options: ["5", "5n", "2n", "n + 2"], answer: "5n + 2" },
+        { question: "In an arithmetic progression, the 7th term is 22 and the common difference is 3. What is the first term?", options: ["7", "6", "5", "4"], answer: "7" }
     ],
     6: [
              // Coordinate Geometry
-        { question: "1 .What is the distance between the points (3, 4) and (6, 8)?", options: ["5", "4", "6", "7"], answer: "5" },
-        { question: "2 .What is the midpoint of the points (2, 4) and (4, 6)?", options: ["(3, 5)", "(5, 3)", "(2, 2)", "(4, 5)"], answer: "(3, 5)" },
-        { question: "3 .What is the slope of the line passing through points (1, 2) and (3, 6)?", options: ["2", "3", "4", "1"], answer: "2" },
-        { question: "4 .What is the equation of a line passing through (0, 0) and (2, 4)?", options: ["y = 2x", "y = 4x", "y = x", "y = 3x"], answer: "y = 2x" },
-        { question: "5 .What is the distance between the points (2, 3) and (5, 7)?", options: ["5", "4", "6", "7"], answer: "5" }
-        { question: "6 . The points (-1, -2), (1, 0), (-1, 2), (-3, 0) form a quadrilateral of type:", options: ["rectangle", "square", "rhombus", "parallelogram"], answer: "square" }
-        { question: "7 . If the distance between the points A(2, -2) and B(-1, x) is equal to 5, then the value of x is", options: ["2", "-2", "1", "-1"], answer: "5" }
-        { question: "8 . The midpoint of a line segment joining two points A(2, 4) and B(-2, -4) is", options: ["(-2, 4)", "(2, -4)", " (0, 0)", " (-2, -4)"], answer: "(0, 0)" }
-        { question: "9 .  The distance of point A(2, 4) from the x-axis is", options: ["2 unit", "4 unit", " -2 unit", "-4 unit"], answer: "4 unit" }
-        { question: "9 .  The distance of point A(2, 4) from the x-axis is", options: ["2 unit", "4 unit", " -2 unit", "-4 unit"], answer: "4 unit" }
-    ],7:[
+             { question: "What is the distance between the points (3, 4) and (6, 8)?", options: ["5", "4", "6", "7"], answer: "5" },
+        { question: "What is the midpoint of the points (2, 4) and (4, 6)?", options: ["(3, 5)", "(5, 3)", "(2, 2)", "(4, 5)"], answer: "(3, 5)" },
+        { question: "What is the slope of the line passing through points (1, 2) and (3, 6)?", options: ["2", "3", "4", "1"], answer: "2" },
+        { question: "What is the equation of a line passing through (0, 0) and (2, 4)?", options: ["y = 2x", "y = 4x", "y = x", "y = 3x"], answer: "y = 2x" },
+        { question: "What is the distance between the points (2, 3) and (5, 7)?", options: ["5", "4", "6", "7"], answer: "5" }
+],7:[
         
         // Trigonometry
         { question: "What is the value of sin(30°)?", options: ["1/2", "√3/2", "1", "√2/2"], answer: "1/2" },
@@ -174,8 +167,6 @@
         { question: "What is the value of cos(0°)?", options: ["0", "1", "√2/2", "∞"], answer: "1" },
         { question: "If tan(θ) = 1, then what is the value of θ?", options: ["30°", "45°", "60°", "90°"], answer: "45°" },
         { question: "What is the value of cos(60°)?", options: ["0", "1", "1/2", "√3/2"], answer: "1/2" },
-        { question: "In ∆ ABC, right-angled at B, AB = 24 cm, BC = 7 cm. The value of tan C is:)?", options: [" 12/7", "24/7", "20/7", " 7/24"], answer: "24/7" },
-        { question: "3. The value of tan 60°/cot 30° is equal to:?", options: [" 0", "1", "2", " 3"], answer: "1" },
 
         ],8 :[      // Statistics
         { question: "What is the mean of the numbers 4, 7, 9, and 5?", options: ["6", "5", "7", "8"], answer: "6" },
