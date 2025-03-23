@@ -1,0 +1,94 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+  }
+  
+  .game-card {
+    width: 300px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .lives-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  
+  .heart-icon {
+    color: red;
+    margin: 0 5px;
+  }
+  
+  .question-text {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .options-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .score-text {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .game-over-card {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+  }
+  
+  .game-over-title {
+    font-size: 24px;
+    color: red;
+    font-weight: bold;
+  }
+  
+  .score {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
+  .incorrect-title {
+    font-size: 18px;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  
+  .incorrect-question {
+    color: red;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  
+  button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
